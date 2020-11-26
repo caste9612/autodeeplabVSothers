@@ -84,7 +84,7 @@ def get_arguments():
                         help="Random seed to have reproducible results.")
 
     # ***** Params for save and load ******
-    parser.add_argument("--restore_from", type=str, default="./pretrained",
+    parser.add_argument("--restore_from", type=str, default=None,
                         help="Where restore models parameters from.")
     parser.add_argument("--save_pred_every", type=int, default=5000,
                         help="Save summaries and checkpoint every often.")

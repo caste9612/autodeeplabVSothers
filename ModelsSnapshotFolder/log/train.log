@@ -1,0 +1,2 @@
+2020-11-26 19:55:12,618 INFO    [train_distribute.py, 170] train from stracth
+2020-11-26 19:55:12,632 INFO    [train_distribute.py, 188] Local Rank: 0
