@@ -32,7 +32,7 @@ class Config(object):
                     'train_list': "/home/antonioc/Scrivania/ML/autodeeplabVSothers/cityscapes/train.txt",
                     'data_dir': "/home/antonioc/Scrivania/ML/dataset/cityscape/leftImg8bit_trainvaltest"}
     
-    model_paths = {'train': './model/cityscapes/icnet_cityscapes_train_30k.npy', 
+    model_paths = {'train': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master/model/cityscapes/icnet_cityscapes_train_30k.npy',
               'trainval': './model/cityscapes/icnet_cityscapes_trainval_90k.npy',
               'train_bn': './model/cityscapes/icnet_cityscapes_train_30k_bnnomerge.npy',
               'trainval_bn': './model/cityscapes/icnet_cityscapes_trainval_90k_bnnomerge.npy',
@@ -60,7 +60,7 @@ class Config(object):
     POWER = 0.9
     RANDOM_SEED = 1234
     WEIGHT_DECAY = 0.0001
-    SNAPSHOT_DIR = '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master'
+    SNAPSHOT_DIR = '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master/snapshots'
     SAVE_NUM_IMAGES = 4
     SAVE_PRED_EVERY = 500
     

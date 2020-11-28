@@ -6,6 +6,8 @@ e possibile scaricare dei modelli pre addestrati per eseguirvi dei test.
 
 Nella cartella ICNet-tensorflow-master si puo invece trovare un implementazione piu recente di ICNet in Tensorflow : https://github.com/hellochick/ICNet-tensorflow
     
+    pip install tensorflow-gpu==1.15 seno c e rischio inizi a girare su cpu, controllare se scrive skip gpu...
+    
     -Dai commenti al codice pare che senza pesi preaddestrati (PSPnet) sia molto difficile avere dei risultati (verificare che anche nell articolo parlano di questi preaddestramenti).
     -I pesi preaddestrati per cityscape si trovano su model e se si vogliono scaricare quelli per ADA dentro script si puo chiamare il file .py per scaricarli.
     -Per quanto riguarda i percorsi alle cartelle di dataset e gli iperparametri di train ecc si possono trovare dentro utils/config.
