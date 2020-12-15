@@ -6,9 +6,7 @@ import os
 import sys
 import time
 
-#import tensorflow as tf
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 import numpy as np
 
 from model import ICNet_BN
@@ -80,7 +78,7 @@ class TrainConfig(Config):
 
     # Set pre-trained weights here (You can download weight using `python script/download_weights.py`) 
     # Note that you need to use "bnnomerge" version.
-    model_weight = '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master/model/cityscapes/icnet_cityscapes_train_30k_bnnomerge.npy'
+    model_weight = './model/cityscapes/icnet_cityscapes_train_30k_bnnomerge.npy'
     
     # Set hyperparameters here, you can get much more setting in Config Class, see 'utils/config.py' for details.
     LAMBDA1 = 0.16

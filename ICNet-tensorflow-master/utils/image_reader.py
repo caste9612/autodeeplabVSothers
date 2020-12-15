@@ -1,8 +1,6 @@
 import os
 import numpy as np
-#import tensorflow as tf
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 import glob
 import cv2
 
@@ -13,30 +11,22 @@ def read_labeled_image_list(data_dir, data_list):
     masks = []
     for line in f:
         try:
-            image, mask = line[:-1].split('   ')
+            image, mask = line[:-1].split(' ')
         except ValueError: # Adhoc for test.
-            image = mask = line.strip().split()
-        #print(image[0])
-        mask = image[1]
-        image = os.path.join(data_dir, image[0])
-        print(image)
+            image = mask = line.strip("\n")
+
+        image = os.path.join(data_dir, image)
         mask = os.path.join(data_dir, mask)
-        #mask = mask.strip()
-        print(mask)
-
-        count = 0
+        mask = mask.strip()
         
-        if not tf.io.gfile.exists(image):
-            #raise ValueError('Failed to find file: ' + image)
-            count += 1
+        if not tf.gfile.Exists(image):
+            raise ValueError('Failed to find file: ' + image)
 
-        if not tf.io.gfile.exists(mask):
-            #raise ValueError('Failed to find file: ' + mask)
-            count+=1
+        if not tf.gfile.Exists(mask):
+            raise ValueError('Failed to find file: ' + mask)
 
-        if count == 0:
-            images.append(image)
-            masks.append(mask)
+        images.append(image)
+        masks.append(mask)
 
     return images, masks
 
@@ -61,8 +51,8 @@ def _extract_mean(img, img_mean, swap_channel=False):
     return img
 
 def _parse_function(image_filename, label_filename, img_mean):
-    img_contents = tf.io.read_file(image_filename)
-    label_contents = tf.io.read_file(label_filename)
+    img_contents = tf.read_file(image_filename)
+    label_contents = tf.read_file(label_filename)
        
     # Decode image & label
     img = tf.image.decode_jpeg(img_contents, channels=3)
@@ -74,7 +64,7 @@ def _parse_function(image_filename, label_filename, img_mean):
     return img, label
 
 def _image_mirroring(img, label):
-    distort_left_right_random = tf.random.uniform([1], 0, 1.0, dtype=tf.float32)[0]
+    distort_left_right_random = tf.random_uniform([1], 0, 1.0, dtype=tf.float32)[0]
     mirror = tf.less(tf.stack([1.0, distort_left_right_random, 1.0]), 0.5)
     mirror = tf.boolean_mask([0, 1, 2], mirror)
     img = tf.reverse(img, mirror)
@@ -83,11 +73,11 @@ def _image_mirroring(img, label):
     return img, label
 
 def _image_scaling(img, label):
-    scale = tf.random.uniform([1], minval=0.5, maxval=2.0, dtype=tf.float32, seed=None)
-    h_new = tf.cast((tf.multiply(tf.cast(tf.shape(img)[0],float), scale)),tf.int32)
-    w_new = tf.cast((tf.multiply(tf.cast(tf.shape(img)[1],float), scale)),tf.int32)
+    scale = tf.random_uniform([1], minval=0.5, maxval=2.0, dtype=tf.float32, seed=None)
+    h_new = tf.to_int32(tf.multiply(tf.to_float(tf.shape(img)[0]), scale))
+    w_new = tf.to_int32(tf.multiply(tf.to_float(tf.shape(img)[1]), scale))
     new_shape = tf.squeeze(tf.stack([h_new, w_new]), axis=[1])
-    img = tf.image.resize(img, new_shape)
+    img = tf.image.resize_images(img, new_shape)
     label = tf.image.resize_nearest_neighbor(tf.expand_dims(label, 0), new_shape)
     label = tf.squeeze(label, axis=[0])
 
@@ -107,7 +97,7 @@ def _random_crop_and_pad_image_and_labels(image, label, crop_h, crop_w, ignore_l
 
     last_image_dim = tf.shape(image)[-1]
     last_label_dim = tf.shape(label)[-1]
-    combined_crop = tf.image.random_crop(combined_pad, [crop_h, crop_w, 4])
+    combined_crop = tf.random_crop(combined_pad, [crop_h, crop_w, 4])
     img_crop = combined_crop[:, :, :last_image_dim]
     label_crop = combined_crop[:, :, last_image_dim:]
     label_crop = label_crop + ignore_label
@@ -149,7 +139,7 @@ def _eval_preprocess(img, label, shape, dataset):
         img = tf.image.pad_to_bounding_box(img, 0, 0, shape[0], shape[1])
         img.set_shape([shape[0], shape[1], 3])
     else:
-        img = tf.image.resize.images(img, shape, align_corners=True)
+        img = tf.image.resize_images(img, shape, align_corners=True)
      
     return img, label
 
@@ -165,7 +155,7 @@ class ImageReader(object):
             print(cfg.param[mode+'_list'])
             self.dataset = self.create_tf_dataset(cfg)
 
-            self.next_image, self.next_label = tf.data.make_one_shot_iterator(self.dataset).get_next()
+            self.next_image, self.next_label = self.dataset.make_one_shot_iterator().get_next() 
     
     def create_tf_dataset(self, cfg):
         dataset = tf.data.Dataset.from_tensor_slices((self.image_list, self.label_list))

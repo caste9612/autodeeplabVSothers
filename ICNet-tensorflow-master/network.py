@@ -1,8 +1,6 @@
 import numpy as np
-#import tensorflow as tf
+import tensorflow as tf
 import os
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
 
 DEFAULT_PADDING = 'VALID'
 DEFAULT_DATAFORMAT = 'NHWC'
@@ -94,13 +92,13 @@ class Network(object):
         print('The checkpoint has been created, step: {}'.format(step))
 
     ## Restore from .npy
-    def load_npy(self, data_path, session, ignore_missing=True):
+    def load_npy(self, data_path, session, ignore_missing=False):
         '''Load network weights.
         data_path: The path to the numpy-serialized network weights
         session: The current TensorFlow session
         ignore_missing: If true, serialized weights for missing layers are ignored.
         '''
-        data_dict = np.load(data_path, encoding='latin1', allow_pickle=True).item()
+        data_dict = np.load(data_path, encoding='latin1',allow_pickle=True).item()
         for op_name in data_dict:
             with tf.variable_scope(op_name, reuse=True):
                 for param_name, data in data_dict[op_name].items():

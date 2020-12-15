@@ -14,3 +14,13 @@ Nella cartella ICNet-tensorflow-master si puo invece trovare un implementazione 
     -ho modificato il codice che dalla lista di immagini crea il dataset ma va rimesso originale usando come lista non la lista attuale in cityscapes ma in ICNet-tensorflow-master/data ecc
     -c e da verificare se in fase di addestramento vengono salvati i nuovi pesi (forse dentro la cartella snapshot?) e in caso ricaricati in fase di test, e vedere in qual modo calcolare e pr9intare la mIoU.
     -Nel notebook demo doverbbero esserci gli strumenti per il test della rete.
+
+    -Gli script possono non funzionare, in caso eseguire i comandi da terminale e se ci sono errori e colpa delle versione dei vari pacchetti, settare quindi 
+        a dovere l ambiente virtuale, 
+
+    -Per la preparazione della lista di file per cityscape dentro la cartella cityscapes e presente uno script apposito 
+    mentre per le compatibilita dei formati occorre:
+    $ export CITYSCAPES_DATASET=<cityscapes dataset path>
+    $csCreateTrainIdLabelImgs
+    $python -m pip install cityscapesscripts
+    
