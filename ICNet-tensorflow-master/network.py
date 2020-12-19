@@ -2,6 +2,9 @@ import numpy as np
 import tensorflow as tf
 import os
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 DEFAULT_PADDING = 'VALID'
 DEFAULT_DATAFORMAT = 'NHWC'
 layer_name = []

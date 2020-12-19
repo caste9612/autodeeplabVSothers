@@ -14,6 +14,9 @@ from utils.config import Config
 from utils.visualize import decode_labels
 from utils.image_reader import ImageReader, prepare_label
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 def get_arguments():
     parser = argparse.ArgumentParser(description="Reproduced ICNet")
     
@@ -78,7 +81,7 @@ class TrainConfig(Config):
 
     # Set pre-trained weights here (You can download weight using `python script/download_weights.py`) 
     # Note that you need to use "bnnomerge" version.
-    model_weight = './model/cityscapes/icnet_cityscapes_train_30k_bnnomerge.npy'
+    model_weight = '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master//model/cityscapes/icnet_cityscapes_trainval_90k.npy'
     
     # Set hyperparameters here, you can get much more setting in Config Class, see 'utils/config.py' for details.
     LAMBDA1 = 0.16

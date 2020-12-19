@@ -1,6 +1,9 @@
 import numpy as np
 import os
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 class Config(object):
     # Setting dataset directory
     CITYSCAPES_DATA_DIR = "/home/antonioc/Scrivania/ML/dataset/cityscape/leftImg8bit_trainvaltest"
@@ -29,12 +32,12 @@ class Config(object):
                     'eval_size': [1025, 2049],
                     'eval_steps': 500,
                     'eval_list': "/home/antonioc/Scrivania/ML/autodeeplabVSothers/cityscapes/cityscapes_val_list.txt",
-                    'train_list': "/home/antonioc/Scrivania/ML/autodeeplabVSothers/cityscapes/train.txt",
+                    'train_list': "/home/antonioc/Scrivania/ML/autodeeplabVSothers/cityscapes/cityscapes_train_list.txt",
                     'data_dir': "/home/antonioc/Scrivania/ML/dataset/cityscape/leftImg8bit_trainvaltest"}
 
     model_paths = {'train': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master/model/cityscapes/icnet_cityscapes_train_30k.npy',
               'trainval': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master//model/cityscapes/icnet_cityscapes_trainval_90k.npy',
-              'train_bn': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master//model/cityscapes/icnet_cityscapes_train_30k_bnnomerge.npy',
+              'train_bn': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master//model/cityscapes/icnet_cityscapes_trainval_90k.npy',
               'trainval_bn': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master//model/cityscapes/icnet_cityscapes_trainval_90k_bnnomerge.npy',
               'others': '/home/antonioc/Scrivania/ML/autodeeplabVSothers/ICNet-tensorflow-master//model/ade20k/model.ckpt-27150'}
 
@@ -50,7 +53,7 @@ class Config(object):
 
     ## You can modify following lines to train different training configurations.
     INFER_SIZE = [1024, 2048, 3]
-    TRAINING_SIZE = [480, 480]
+    TRAINING_SIZE = [480, 481]
     TRAINING_STEPS = 3000
 
     N_WORKERS = 12

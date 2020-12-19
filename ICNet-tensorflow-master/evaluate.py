@@ -9,6 +9,9 @@ from utils.config import Config
 from utils.image_reader import ImageReader
 from model import ICNet, ICNet_BN
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 # mapping different model
 model_config = {'train': ICNet, 'trainval': ICNet, 'train_bn': ICNet_BN, 'trainval_bn': ICNet_BN, 'others': ICNet_BN}
 

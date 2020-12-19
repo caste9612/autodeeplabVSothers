@@ -3,6 +3,9 @@ from network import Network
 from utils.image_reader import _infer_preprocess
 from utils.visualize import decode_labels
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 class ICNet(Network):
     def __init__(self, cfg, mode, image_reader=None):
         self.cfg = cfg
